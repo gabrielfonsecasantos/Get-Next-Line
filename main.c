@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/28 23:38:58 by gabriel           #+#    #+#             */
-/*   Updated: 2026/07/27 22:01:41 by gabriel          ###   ########.fr       */
+/*   Created: 2026/07/27 21:38:00 by gabriel           #+#    #+#             */
+/*   Updated: 2026/07/27 21:38:28 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
-char	*get_next_line(int fd)
+int	main(void)
 {
-	char	*str;
-	int		bytes_read;
-	char	buffer[BUFFER_SIZE];
+	int	fd;
 
-  while (bytes_read)
-  {
-    bytes_read = read(fd, buffer, BUFFER_SIZE); 
-  }
+	fd = open("sample.txt", O_RDONLY);
+	while (fd)
+	{
+		get_next_line(fd);
+	}
 	return (0);
 }

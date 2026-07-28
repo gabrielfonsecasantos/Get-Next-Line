@@ -6,16 +6,19 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 23:31:20 by gabriel           #+#    #+#             */
-/*   Updated: 2026/06/28 23:33:42 by gabriel          ###   ########.fr       */
+/*   Updated: 2026/07/27 21:49:13 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_GET_NEXT_LINE_H
-# define FT_GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-# include <unistd.h>
+# include <stdlib.h>
 # include <fcntl.h>
+# include <unistd.h>
 
-char *ft_get_next_line(int fd);
+# define BUFFER_SIZE 42
+char	*get_next_line(int fd);
+
 
 #endif
