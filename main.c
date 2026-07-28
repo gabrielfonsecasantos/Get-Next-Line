@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/27 21:38:00 by gabriel           #+#    #+#             */
-/*   Updated: 2026/07/27 21:38:28 by gabriel          ###   ########.fr       */
+/*   Updated: 2026/07/27 23:18:46 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ int	main(void)
 	int	fd;
 
 	fd = open("sample.txt", O_RDONLY);
-	while (fd)
-	{
-		get_next_line(fd);
-	}
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
 	return (0);
 }
