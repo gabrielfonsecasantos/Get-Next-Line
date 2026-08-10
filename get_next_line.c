@@ -6,68 +6,102 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 23:38:58 by gabriel           #+#    #+#             */
-/*   Updated: 2026/08/05 19:48:38 by gabriel          ###   ########.fr       */
+/*   Updated: 2026/08/10 20:52:13 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-char  *fill_stash(char *fd, char *stash)
+static char	*fill_stash(int fd, char *stash)
 {
-  char  *buffer;
-  unsigned int  bytes_read;
-  unsigned int  counter;
-  
-  while (bytes_read > 0 && strchr(stash, '\n'))
-  {
-    bytes_read = read(fd, buffer, BUFFER_SIZE);
-    buffer[bytes_read] = '\0';
-    counter = 0;
-    while (buffer[counter])
-    {
-      stash[counter] = buffer[counter];
-      counter++;
-    }
-    stash[counter] = '\0'; 
-  }
-  free(buffer);
-  return (stash);
-}
-char *get_line(char *stash)
-{
-  unsigned int  counter;
-  unsigned int  size;
-  char  *line;
+	char	*buffer;
+	int		bytes_read;
 
-  counter = 0;
-  size = strlen(stash);
-  line = malloc(sizeof(char) * size + 1);
-  if (!line)
-    return (NULL);
-  while (stash[counter] && stash[counter] != '\n')
-  {
-    line[counter] = stash[counter];
-    counter++;
-  }
-  line[counter] = '\n';
-  return (line);
+	bytes_read = 1;
+	buffer = malloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return (NULL);
+	while (bytes_read > 0 && !ft_strchr(stash, '\n'))
+	{
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read == -1)
+		{
+			return (free(buffer), free(stash), NULL);
+		}
+		buffer[bytes_read] = '\0';
+		stash = strjoin_free(stash, buffer);
+		if (!stash)
+			return (free(buffer), NULL);
+	}
+	free(buffer);
+	return (stash);
 }
 
-char  *process_stash(char *stash)
+static char	*get_line(char *stash)
 {
-  
+	unsigned int	counter;
+	unsigned int	size;
+	char			*line;
+
+	counter = 0;
+	size = line_size(stash);
+	line = malloc(sizeof(char) * (size + 1));
+	if (!line)
+		return (NULL);
+	while (counter < size)
+	{
+		line[counter] = stash[counter];
+		counter++;
+	}
+	line[counter] = '\0';
+	return (line);
+}
+
+static char	*process_stash(char *stash)
+{
+	size_t	size;
+	size_t	stash_size;
+	size_t	i;
+	size_t	j;
+	char	*new_stash;
+
+	size = line_size(stash);
+	stash_size = ft_strlen(stash);
+	new_stash = malloc(sizeof(char) * ((stash_size - size) + 1));
+	if (!new_stash)
+	{
+		free(stash);
+		return (NULL);
+	}
+	i = size;
+	j = 0;
+	while (i < stash_size)
+	{
+		new_stash[j] = stash[i];
+		i++;
+		j++;
+	}
+	new_stash[j] = '\0';
+	free(stash);
+	return (new_stash);
 }
 
 char	*get_next_line(int fd)
 {
-	char		*str;
-  static char    *stash;
-	int			bytes_read;
-	int			counter;
+	char		*line;
+	static char	*stash;
 
-  fill_stash(fd, stash);
-  get_line(stash);
-  stash++;
-	return (stash);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	stash = fill_stash(fd, stash);
+	if (!stash || !*stash)
+	{
+		free(stash);
+		stash = NULL;
+		return (NULL);
+	}
+	line = get_line(stash);
+	stash = process_stash(stash);
+	return (line);
 }
