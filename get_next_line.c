@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 23:38:58 by gabriel           #+#    #+#             */
-/*   Updated: 2026/08/10 20:52:13 by gabriel          ###   ########.fr       */
+/*   Updated: 2026/08/10 23:24:32 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,17 @@ static char	*fill_stash(int fd, char *stash)
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
 		{
-			return (free(buffer), free(stash), NULL);
+			free(buffer);
+			free(stash);
+			return (NULL);
 		}
 		buffer[bytes_read] = '\0';
 		stash = strjoin_free(stash, buffer);
 		if (!stash)
-			return (free(buffer), NULL);
+		{
+			free(buffer);
+			return (NULL);
+		}
 	}
 	free(buffer);
 	return (stash);

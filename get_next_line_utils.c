@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/05 18:10:55 by gabriel           #+#    #+#             */
-/*   Updated: 2026/08/10 20:45:23 by gabriel          ###   ########.fr       */
+/*   Updated: 2026/08/10 23:30:51 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ char	*strjoin_free(char *stash, char *buffer)
 	stash_len = ft_strlen(stash);
 	new_stash = malloc(sizeof(char) * (stash_len + ft_strlen(buffer) + 1));
 	if (!new_stash)
-		return (free(stash), NULL);
+	{
+		free(stash);
+		return (NULL);
+	}
 	i = 0;
 	while (i < stash_len)
 	{
