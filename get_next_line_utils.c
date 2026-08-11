@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/05 18:10:55 by gabriel           #+#    #+#             */
-/*   Updated: 2026/08/10 23:30:51 by gabriel          ###   ########.fr       */
+/*   Updated: 2026/08/11 16:55:29 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,26 @@ char	*ft_strchr(const char *s, int c)
 char	*strjoin_free(char *stash, char *buffer)
 {
 	char	*new_stash;
-	size_t	stash_len;
-	size_t	i;
-	size_t	j;
 
-	stash_len = ft_strlen(stash);
-	new_stash = malloc(sizeof(char) * (stash_len + ft_strlen(buffer) + 1));
+	new_stash = malloc(sizeof(char) * (ft_strlen(stash) + ft_strlen(buffer)
+				+ 1));
 	if (!new_stash)
 	{
 		free(stash);
 		return (NULL);
 	}
+	new_stash = ft_strcat(buffer, stash, new_stash);
+	free(stash);
+	return (new_stash);
+}
+
+char	*ft_strcat(char *buffer, char *stash, char *new_stash)
+{
+	size_t	i;
+	size_t	j;
+
 	i = 0;
-	while (i < stash_len)
+	while (i < ft_strlen(stash))
 	{
 		new_stash[i] = stash[i];
 		i++;
@@ -72,7 +79,6 @@ char	*strjoin_free(char *stash, char *buffer)
 		j++;
 	}
 	new_stash[i + j] = '\0';
-	free(stash);
 	return (new_stash);
 }
 

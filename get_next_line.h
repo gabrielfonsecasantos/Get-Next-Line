@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 23:31:20 by gabriel           #+#    #+#             */
-/*   Updated: 2026/08/10 20:29:46 by gabriel          ###   ########.fr       */
+/*   Updated: 2026/08/11 16:55:36 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ char	*ft_strchr(const char *s, int c);
 size_t	ft_strlen(char *str);
 char	*strjoin_free(char *stash, char *buffer);
 size_t	line_size(char *str);
+char	*ft_strcat(char *buffer, char *stash, char *new_stash);
 
 #endif

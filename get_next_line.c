@@ -6,19 +6,17 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 23:38:58 by gabriel           #+#    #+#             */
-/*   Updated: 2026/08/10 23:24:32 by gabriel          ###   ########.fr       */
+/*   Updated: 2026/08/11 17:08:03 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-static char	*fill_stash(int fd, char *stash)
+static char	*fill_stash(int fd, char *stash, int bytes_read)
 {
 	char	*buffer;
-	int		bytes_read;
 
-	bytes_read = 1;
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
@@ -45,9 +43,9 @@ static char	*fill_stash(int fd, char *stash)
 
 static char	*get_line(char *stash)
 {
-	unsigned int	counter;
-	unsigned int	size;
-	char			*line;
+	size_t	counter;
+	size_t	size;
+	char	*line;
 
 	counter = 0;
 	size = line_size(stash);
@@ -99,7 +97,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	stash = fill_stash(fd, stash);
+	stash = fill_stash(fd, stash, 1);
 	if (!stash || !*stash)
 	{
 		free(stash);
